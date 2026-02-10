@@ -15,13 +15,13 @@ public class Usuario {
       this.email = email;
     }
     else{
-      throw new UsuarioInvalidoException("Usuario invalido");
+      throw new UsuarioInvalidoException("Email invalido");
     }
     if (numero.matches("SOC+[0-9]{5}")) {
       this.numeroSocio = numero;
     }
     else {
-      throw new UsuarioInvalidoException("Usuario invalido");
+      throw new UsuarioInvalidoException("Codigo de usuario invalido");
     }
     this.fechaRegistro = fechaRegistro;
   }
