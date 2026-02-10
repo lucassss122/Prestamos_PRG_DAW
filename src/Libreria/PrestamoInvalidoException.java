@@ -1,0 +1,7 @@
+package Libreria;
+
+public class PrestamoInvalidoException extends Exception{
+public PrestamoInvalidoException(String mensaje){
+}
+}
+

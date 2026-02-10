@@ -17,12 +17,32 @@ public class Usuario {
     else{
       throw new UsuarioInvalidoException("Usuario invalido");
     }
-    if (email.matches("SOC+[0-9]{5}")) {
+    if (numero.matches("SOC+[0-9]{5}")) {
       this.numeroSocio = numero;
     }
     else {
       throw new UsuarioInvalidoException("Usuario invalido");
     }
     this.fechaRegistro = fechaRegistro;
+  }
+
+  public void sancionar(int dias, LocalDate fecha_san){
+    LocalDate fecha_fin = fecha_san.plusDays((long)dias);
+    System.out.println(fecha_fin);
+    this.sancionado = true;
+  }
+
+  public void levantarSancion(){
+    sancionado = false;
+  }
+
+  public boolean estaSancionado(){
+    return sancionado;
+  }
+
+  @Override
+  public String toString(){
+    return "Nombre del usuario: "+this.nombre+" Email: "+this.email+" Fecha de registro: "+
+        this.fechaRegistro+" Numero de usuario: "+this.numeroSocio;
   }
 }
