@@ -13,6 +13,10 @@ public class Prestamo {
   private LocalDate fechaDevolucionPrevista;
   private LocalDate fechaDevolucionReal = null;
 
+  public String getCodigoLibro() {
+    return codigoLibro;
+  }
+
   public Prestamo(String codigo, Usuario usuario, String titulo, LocalDate fecha) throws PrestamoInvalidoException {
     if (codigo.matches("[A-Z]{3}+[0-9]{4}")) {
       this.codigoLibro = codigo;
