@@ -9,6 +9,10 @@ public class Usuario {
   private boolean sancionado;
   private LocalDate fechaFinSancion;
 
+  public String getNombre() {
+    return nombre;
+  }
+
   public Usuario(String nombre, String email, String numero, LocalDate fechaRegistro) throws UsuarioInvalidoException{
     this.nombre = nombre;
     if (email.matches(".*@.*\\..*")) {

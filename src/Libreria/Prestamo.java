@@ -43,17 +43,34 @@ public class Prestamo {
       this.fechaDevolucionReal = fecha;
     }
   }
-/*
+
   public int calcularDiasRetraso() {
     if (fechaDevolucionReal != null) {
-      return (int) ChronoUnit.DAYS.between(fechaDevolucionPrevista, fechaDevolucionReal);
-      if (fechaDevolucionReal.isBefore(fechaDevolucionPrevista)) {
-
-      } else {
-        return (int) ChronoUnit.DAYS.between(fechaDevolucionPrevista, LocalDate.now());
+      int dias = (int) ChronoUnit.DAYS.between(fechaDevolucionPrevista, fechaDevolucionReal);
+      if (dias<0){
+        return 0;
+      }
+      return dias;
+    }
+    else{
+      return (int) ChronoUnit.DAYS.between(fechaPrestamo, LocalDate.now());
       }
     }
+
+    public boolean estaRetrasado(){
+    if(LocalDate.now().isAfter(fechaDevolucionPrevista)) {
+      return true;
+    }
+      else{
+        return false;
+      }
+    }
+
+    @Override
+    public String toString(){
+    return "Libro: "+tituloLibro+", Codigo: "+codigoLibro+"\n"+"Prestamo solicitado por: "+socio.getNombre()+"\n"+"Fecha del prestamo: " +
+        fechaPrestamo+", Fecha devolucion prevista: "+fechaDevolucionPrevista+", Fecha de devolucion real: "+fechaDevolucionReal;
+    }
   }
-  */
-}
+
 
