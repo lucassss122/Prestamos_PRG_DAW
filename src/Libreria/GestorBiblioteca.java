@@ -2,6 +2,7 @@ package Libreria;
 
 import java.security.PublicKey;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 public class GestorBiblioteca {
@@ -18,6 +19,7 @@ public class GestorBiblioteca {
   }
 
   public GestorBiblioteca() {
+    super();
   }
 
   public void registrarUsuario(Usuario usuario) throws UsuarioRepetidoException {
@@ -58,6 +60,29 @@ public class GestorBiblioteca {
     @Override
     public String toString(){
       return Arrays.toString(usuarios);
+  }
+
+  public boolean devolverLibro(String codigo, LocalDate f1) throws PrestamoInvalidoException {
+    boolean prestado = false;
+    Prestamo encontrado = null;
+    for (int i = 0; i < numeroPrestamos; i++) {
+      if (prestamos[i].getCodigoLibro().equals(codigo) && prestamos[i].getFechaDevolucionReal() == null) {
+        encontrado = prestamos[i];
+        break;
+      }
+    }
+    if(encontrado == null){
+      return false;
+    }
+    //}registrarDevolucion(f1);
+    if(f1.isBefore(encontrado.getFechaDevolucionPrevista())){
+      throw new PrestamoInvalidoException("La fecha introducida es incorrecta");
+    }
+    else{
+      int diasRetraso = (int) ChronoUnit.DAYS.between(f1,encontrado.getFechaDevolucionPrevista());
+      encontrado.getSocio().sancionar(diasRetraso, f1);
+    }
+    return true;
   }
 }
 

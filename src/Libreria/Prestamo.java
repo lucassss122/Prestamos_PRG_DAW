@@ -13,6 +13,18 @@ public class Prestamo {
   private LocalDate fechaDevolucionPrevista;
   private LocalDate fechaDevolucionReal = null;
 
+  public LocalDate getFechaDevolucionReal() {
+    return fechaDevolucionReal;
+  }
+
+  public LocalDate getFechaDevolucionPrevista() {
+    return fechaDevolucionPrevista;
+  }
+
+  public Usuario getSocio() {
+    return socio;
+  }
+
   public String getCodigoLibro() {
     return codigoLibro;
   }
