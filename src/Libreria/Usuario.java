@@ -13,6 +13,10 @@ public class Usuario {
     return nombre;
   }
 
+  public String getNumeroSocio() {
+    return numeroSocio;
+  }
+
   public Usuario(String nombre, String email, String numero, LocalDate fechaRegistro) throws UsuarioInvalidoException{
     this.nombre = nombre;
     if (email.matches(".*@.*\\..*")) {

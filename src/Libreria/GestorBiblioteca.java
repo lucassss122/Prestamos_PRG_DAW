@@ -10,14 +10,9 @@ public class GestorBiblioteca {
   private static final int MAX_PRESTAMOS = 200;
   Usuario[] usuarios = new Usuario[MAX_USUARIOS];
   Prestamo[] prestamos = new Prestamo[MAX_PRESTAMOS];
-  String [] libros = new String[100];
+  String[] libros = new String[100];
   int numeroUsuarios = 0;
   int numeroPrestamos = 0;
-
-  public Usuario[] getUsuarios() {
-    return usuarios;
-  }
-
   public GestorBiblioteca() {
     super();
   }
@@ -29,8 +24,8 @@ public class GestorBiblioteca {
       }
     }
     System.out.println("Usuario registrado");
-      usuarios[numeroUsuarios] = usuario;
-      numeroUsuarios++;
+    usuarios[numeroUsuarios] = usuario;
+    numeroUsuarios++;
   }
 
 
@@ -42,7 +37,7 @@ public class GestorBiblioteca {
         break;
       }
     }
-    if (!codigo.matches("[A-Z]{3}[0-9]{4}")){
+    if (!codigo.matches("[A-Z]{3}[0-9]{4}")) {
       throw new Exception("El codigo es incorrecto");
     } else if (!f1.isAfter(LocalDate.now())) {
       throw new PrestamoInvalidoException("La fecha introducida es incorrecta");
@@ -57,13 +52,13 @@ public class GestorBiblioteca {
     numeroPrestamos++;
     return nuevo;
   }
-    @Override
-    public String toString(){
-      return Arrays.toString(usuarios);
+
+  @Override
+  public String toString() {
+    return Arrays.toString(usuarios);
   }
 
   public boolean devolverLibro(String codigo, LocalDate f1) throws PrestamoInvalidoException {
-    boolean prestado = false;
     Prestamo encontrado = null;
     for (int i = 0; i < numeroPrestamos; i++) {
       if (prestamos[i].getCodigoLibro().equals(codigo) && prestamos[i].getFechaDevolucionReal() == null) {
@@ -71,20 +66,35 @@ public class GestorBiblioteca {
         break;
       }
     }
-    if(encontrado == null){
+    if (encontrado == null) {
       return false;
     }
-    //}registrarDevolucion(f1);
-    if(f1.isBefore(encontrado.getFechaDevolucionPrevista())){
-      throw new PrestamoInvalidoException("La fecha introducida es incorrecta");
+    if (f1.isBefore(encontrado.getFechaPrestamo())) {
+      throw new PrestamoInvalidoException("La fecha introducida es anterior a la del prestamo");
     }
-    else{
-      int diasRetraso = (int) ChronoUnit.DAYS.between(f1,encontrado.getFechaDevolucionPrevista());
-      encontrado.getSocio().sancionar(diasRetraso, f1);
+    if (f1.isAfter(encontrado.getFechaDevolucionPrevista())) {
+      int dias = (int) ChronoUnit.DAYS.between(encontrado.getFechaDevolucionPrevista(), f1);
+      encontrado.getSocio().sancionar(dias, f1);
     }
+    encontrado.setFechaDevolucionReal(f1);
     return true;
   }
+
+  public Usuario buscarUsuario(String codigo) {
+    Usuario encontrado;
+    for (int i = 0; i < numeroUsuarios; i++) {
+      if (codigo.equals(usuarios[i].getNumeroSocio())) {
+        return usuarios[i];
+      }
+    }
+    return null;
+  }
+
+  public void getPrestamos() {
+    System.out.println(Arrays.toString(prestamos));
+  }
+
+  public void getUsuarios() {
+    System.out.println(Arrays.toString(usuarios));
+  }
 }
-
-
-

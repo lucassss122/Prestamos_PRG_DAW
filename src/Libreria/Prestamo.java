@@ -13,6 +13,14 @@ public class Prestamo {
   private LocalDate fechaDevolucionPrevista;
   private LocalDate fechaDevolucionReal = null;
 
+  public LocalDate getFechaPrestamo() {
+    return fechaPrestamo;
+  }
+
+  public void setFechaDevolucionReal(LocalDate fechaDevolucionReal) {
+    this.fechaDevolucionReal = fechaDevolucionReal;
+  }
+
   public LocalDate getFechaDevolucionReal() {
     return fechaDevolucionReal;
   }
