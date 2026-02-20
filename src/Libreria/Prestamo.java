@@ -38,10 +38,10 @@ public class Prestamo {
   }
 
   public Prestamo(String codigo, Usuario usuario, String titulo, LocalDate fecha) throws PrestamoInvalidoException {
-    if (codigo.matches("[A-Z]{3}+[0-9]{4}")) {
+    if (codigo.matches("[A-Z]{3}[0-9]{4}")) {
       this.codigoLibro = codigo;
     } else {
-      throw new PrestamoInvalidoException("El codigo de usuario introducido no es correcto");
+      throw new PrestamoInvalidoException("El codigo introducido no es correcto ");
     }
     this.socio = usuario;
 

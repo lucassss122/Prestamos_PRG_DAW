@@ -17,6 +17,24 @@ public class GestorBiblioteca {
     super();
   }
 
+  public int getNumeroUsuarios() {
+    return numeroUsuarios;
+  }
+
+  public void quitarPrestamo(String codigo){
+    for (int i = 0; i < numeroPrestamos; i++) {
+      if (prestamos[i].getCodigoLibro().equals(codigo)) {
+        prestamos[i] = null;
+      }
+    }
+  }
+  public void mostrarSancionados(){
+    for (int i = 0; i < numeroUsuarios; i++) {
+      if(usuarios[i].estaSancionado()){
+        System.out.println(usuarios[i]);
+      }
+    }
+  }
   public void registrarUsuario(Usuario usuario) throws UsuarioRepetidoException {
     for (int i = 0; i < numeroUsuarios; i++) {
       if (usuarios[i].equals(usuario)) {
@@ -39,7 +57,7 @@ public class GestorBiblioteca {
     }
     if (!codigo.matches("[A-Z]{3}[0-9]{4}")) {
       throw new Exception("El codigo es incorrecto");
-    } else if (!f1.isAfter(LocalDate.now())) {
+    } else if (f1.isAfter(LocalDate.now())) {
       throw new PrestamoInvalidoException("La fecha introducida es incorrecta");
     } else if (repetido) {
       throw new LibroNoDisponibleException("El libro no se encuentra disponible");
@@ -67,7 +85,7 @@ public class GestorBiblioteca {
       }
     }
     if (encontrado == null) {
-      return false;
+      throw new PrestamoInvalidoException("El libro que se intenta devolver ya esta en la biblioteca");
     }
     if (f1.isBefore(encontrado.getFechaPrestamo())) {
       throw new PrestamoInvalidoException("La fecha introducida es anterior a la del prestamo");
